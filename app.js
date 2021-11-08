@@ -73,10 +73,7 @@ function pollRuuviGw(mqttClient, ruuvigw) {
       Object.keys(history.data.tags).forEach(function(tagMac) {
         console.log(tagMac)
         console.log(history.data.tags[tagMac])
-        let payload = {
-          "data": history.data.tags[tagMac]
-        }
-        mqttClient.publish(CONFIG.ruuvi_topic + tagMac, JSON.stringify(payload))
+        mqttClient.publish(CONFIG.ruuvi_topic + tagMac, JSON.stringify(history.data.tags[tagMac]))
       });
     }
   ).catch(e => {
