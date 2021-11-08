@@ -70,13 +70,14 @@ async function initConfig(configFile) {
 function pollRuuviGw(mqttClient, ruuvigw) {
   ruuvigw.getHistory(CONFIG.poll_interval).then(
     history => {
-      console.log(history)
-      for (var tagMac in Object.keys(history.data.tags)) {
+      Object.keys(history.data.tags).forEach(function(tagMac) {
+        console.log(tagMac)
+        console.log(history.data.tags[tagMac])
         let payload = {
           "data": history.data.tags[tagMac]
         }
         mqttClient.publish(CONFIG.ruuvi_topic + tagMac, JSON.stringify(payload))
-      }
+      });
     }
   ).catch(e => {
     console.log(e)
